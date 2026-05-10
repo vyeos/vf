@@ -1,27 +1,29 @@
 use dioxus::prelude::*;
 
-use crate::fs::operations::read_dir;
+use crate::{fs::operations::read_dir, models::AppState};
 
 #[component]
 pub fn FileList() -> Element {
-    let mut curr_path = use_signal(|| std::env::current_dir().unwrap());
-    let mut files = use_signal(|| read_dir(&curr_path()));
+    let mut app_state = use_context::<AppState>();
+    let files = use_memo(move || {
+        let path = (app_state.current_path)();
+        read_dir(&path)
+    });
 
     rsx! {
         div{
-            class: "border-l border-t p-4 flex flex-col justify-center gap-2 flex-wrap",
+            class: "flex-1 border-l border-2 border-t p-4 flex flex-col justify-top gap-2 flex-wrap overflow-auto",
             for item in files() {
                 div {
                     onclick: move |_| {
                         if item.is_dir {
-                            curr_path.set(item.path.clone());
-                            files.set(read_dir(&curr_path()));
+                            app_state.current_path.set(item.path.clone());
                         }
                     },
                     key: "{item.path.display()}",
                     {if item.is_dir {
                         rsx! {div{
-                            class: "flex gap-2 items-center",
+                            class: "flex gap-2 items-center cursor-pointer text-primary hover:bg-secondary/20",
                             svg{ xmlns:"http://www.w3.org/2000/svg",
                                 width:"16",
                                 height:"16",
@@ -38,7 +40,7 @@ pub fn FileList() -> Element {
                         }}
                     } else {
                         rsx!{div {
-                            class: "flex gap-2 items-center",
+                            class: "flex gap-2 items-center hover:bg-secondary/20",
                             svg {
                                 xmlns:"http://www.w3.org/2000/svg",
                                 width:"16",

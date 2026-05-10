@@ -1,5 +1,7 @@
 use std::path::PathBuf;
 
+use dioxus::signals::Signal;
+
 #[derive(Clone, PartialEq)]
 pub struct FileItem {
     pub name: String,
@@ -8,6 +10,7 @@ pub struct FileItem {
 }
 
 #[derive(Clone)]
-struct Favourite {
-    path: PathBuf,
+pub struct AppState {
+    pub current_path: Signal<PathBuf>,
+    pub favourites: Signal<Vec<PathBuf>>,
 }
