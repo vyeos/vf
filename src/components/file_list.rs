@@ -14,9 +14,22 @@ pub fn FileList() -> Element {
     rsx! {
         div{
             class: "flex-1 border-l border-2 border-t p-4 flex flex-col justify-top gap-2 flex-wrap overflow-auto",
-            for item in files() {
+            for item in files().iter() {
                 div {
-                    onclick: move |_| {
+                    onclick: move |event| {
+                        let multi_select = event.modifiers().ctrl() || event.modifiers().meta();
+                        let mut selected = (app_state.selected_items)();
+                        if multi_select{
+                            if selected.contains(&item.path){
+                                selected.remove(&item.path);
+                            }
+                            else {
+                                selected.insert(item.path.clone());
+                            }
+                        }
+                        app_state.selected_items.set(selected);
+                    },
+                    ondoubleclick: move |_| {
                         if item.is_dir {
                             app_state.current_path.set(item.path.clone());
                         }

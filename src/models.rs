@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::{collections::HashSet, path::PathBuf};
 
 use dioxus::signals::Signal;
 
@@ -13,4 +13,5 @@ pub struct FileItem {
 pub struct AppState {
     pub current_path: Signal<PathBuf>,
     pub favourites: Signal<Vec<PathBuf>>,
+    pub selected_items: Signal<HashSet<PathBuf>>,
 }

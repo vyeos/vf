@@ -1,6 +1,8 @@
 file/folder
-    - create 
-    - list 
-    - open
-    - rename
-sorting
+    [ ] create 
+    [-] list 
+    [ ] open
+    [ ] rename
+    [ ] favs
+    [ ] sorting
+    [ ] diff views
