@@ -3,8 +3,6 @@ mod components;
 mod fs;
 mod models;
 use crate::{components::{FileList, Menubar, Sidebar}, models::AppState};
-// use fs::operations::read_dir;
-// use std::env;
 
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
 
