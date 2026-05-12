@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 use dioxus::prelude::*;
 mod components;
 mod fs;
@@ -17,11 +15,7 @@ fn main() {
 
 #[component]
 fn App() -> Element {
-    use_context_provider(|| AppState {
-        current_path: Signal::new(std::env::current_dir().unwrap()),
-        favourites: Signal::new(vec![]),
-        selected_items: Signal::new(HashSet::new()),
-    });
+    use_context_provider(|| AppState::new(std::env::current_dir().unwrap()));
 
     rsx! {
         document::Link {rel: "stylesheet", href: TAILWIND_CSS}

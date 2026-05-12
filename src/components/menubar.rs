@@ -16,7 +16,7 @@ pub fn Menubar() -> Element {
                 button {
                     onclick: move |_| {
                         if let Some(parent) = curr.parent() {
-                            app_state.current_path.set(parent.to_path_buf());
+                            app_state.set_current_path(parent.to_path_buf());
                         }
                     },
                     class: " hover:bg-primary hover:text-primary-foreground rounded-full hover:cursor-pointer",
